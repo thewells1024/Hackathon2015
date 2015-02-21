@@ -1,5 +1,5 @@
 from flask import Flask, make_response, redirect, request, render_template, url_for
-from resume_data import serialize, deserialize, parse_http_form, generate_pdf_resume
+from resume_data import UserData
 
 app = Flask(__name__)
 
@@ -14,7 +14,7 @@ def resume_info_form():
 	if request.method == 'GET':
 		return render_template('form.html')
 	else:
-		data = parse_http_form([field for field in request.form])
+		data = UserData(request.form)
 		response = make_response(redirect(url_for('resume')))
 		response.set_cookie(serialize(data))
 		return response
