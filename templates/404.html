@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
+{% block extrahead %}
+    <link href="/static/404.css" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
-	<img src='/static/404.png' />
+    <div class="page404">
+        <h1>Error 404: You took a wrong turn</h1>
+        <img src='/static/404.png' />
+        <p>Let's go back <a href="localhost">Home</a></p>
+    </div>
 {% endblock %}
