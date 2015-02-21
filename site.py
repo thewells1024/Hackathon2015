@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for
 app = Flask(__name__)
 
 # Homepage
@@ -24,6 +24,11 @@ def resume_info():
 @app.route('/mockup/')
 def mockup():
 	return render_template('mockup.html')
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
 	app.debug = True
