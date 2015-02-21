@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
@@ -11,6 +11,7 @@ def resume_info_form():
 		return # the form
 	else:
 		# get their info from the POST
+		return # something
 
 @app.route('/info/')
 def resume_ideas():
