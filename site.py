@@ -10,7 +10,7 @@ def homepage():
 @app.route('/form/', methods = ['GET', 'POST'])
 def resume_info_form():
 	if request.method == 'GET':
-		return # the form
+		return render_template('form.html')
 	else:
 		# get their info from the POST
 		return # something
