@@ -24,6 +24,14 @@ def dict_sketchy_shit(fd, string, keys):
             temp[i][k] = fd[string+str(i)+k]
     return temp
 
+def serialize_dict(dict):
+    s = "{ "
+    for key in dict.keys():
+        s += "|" + key + ":" + dict[key] + "| "
+    s += "} "
+    return s
+    
+
 class UserData:
     def __init__(self, fd):
         pi = {}
@@ -44,6 +52,27 @@ class UserData:
     # Takes a python object and returns an object for a cookie
     def serialize(data):
         s = ""
+        s += "Personal_Info { " + serialize_dict(self.personal_info) + "\n"
+        s += "Education < "
+        for institute in self.education:
+            s += serialize_dict(institute) + ", "
+        s = s[0:len(s) - 3]
+        s += " >\n"
+        s += "Work Experience < "
+        for exp in self.work_experience:
+            s += serialize_dict(exp) + ", "
+        s = s[0:len(s) - 3]
+        s += " >\n"
+        s += "Projects < "
+        for proj in self.projects:
+            s += serialize(proj) + ", "
+        s = s[0:len(s) - 3]
+        s += " >\n"
+        s += "Skills < "
+        for skill in self.skills:
+            s += skill + ", "
+        s = s[0:len(s) - 3]
+        s += " >\n"
     
     # Takes an object and returns a python object
     def deserialize(data):
