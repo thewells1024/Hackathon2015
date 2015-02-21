@@ -30,6 +30,10 @@ def resume_generator():
 def resume_info():
 	return render_template('resume_info.html')
 
+@app.route('/about/')
+def about():
+	return render_template('about.html')
+
 # Mockup page for testing
 @app.route('/mockup/')
 def mockup():
