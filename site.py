@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, request, render_template
 app = Flask(__name__)
 
 # Homepage
@@ -19,6 +19,11 @@ def resume_info_form():
 @app.route('/info/')
 def resume_info():
 	return render_template('resume_info.html')
+
+# Mockup page for testing
+@app.route('/mockup/')
+def mockup():
+	return render_template('mockup.html')
 
 if __name__ == '__main__':
 	app.debug = True
