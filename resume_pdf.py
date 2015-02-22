@@ -7,12 +7,14 @@ from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
- 
+
+# Generates a unique filename for a resume pdf
 def get_secure_filename():
     s = str(time()).replace('.', '')
     s+= str(random())[2:]
     return 'static/resumes/' + s + '.pdf'
 
+# Takes a user data object and populates a pdf with the info, returning the url path to the pdf file
 def generate_pdf_from_data(data):
     filename = get_secure_filename()
     subprocess.check_call(['touch', filename])
