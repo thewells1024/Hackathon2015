@@ -20,8 +20,21 @@ def generate_pdf_from_data(data):
     
     styles=getSampleStyleSheet()
     styles.add(ParagraphStyle(name='Center', alignment=TA_CENTER))
+    styles.add(ParagraphStyle(name='Left', alignment=TA_CENTER))
+    styles.add(ParagraphStyle(name='Right', alignment=TA_CENTER))
+    
     ptext = '<font size=18>%s</font>' % data.personal_info['name'] 
-    Story.append(Paragraph(ptext, styles["Normal"]))
+    Story.append(Paragraph(ptext, styles["Center"]))
     Story.append(Spacer(1, 12))
+    ptext = '<font size=10>%s</font>' % data.personal_info['phone'] 
+    Story.append(Paragraph(ptext, styles["Center"]))
+    ptext = '<font size=10>%s</font>' % data.personal_info['email'] 
+    Story.append(Paragraph(ptext, styles["Center"]))
+    ptext = '<font size=10>%s</font>' % data.personal_info['location'] 
+    Story.append(Paragraph(ptext, styles["Center"]))
+    Story.append(Spacer(1, 24))
+
+    ptext = '<font size=12>%s</font>' % data.education['school' + i + 'name']
+    Story.append(Paragraph(ptext, styles["Left"]))
 
     doc.build(Story)

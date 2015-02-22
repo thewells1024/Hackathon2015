@@ -9,21 +9,16 @@ def homepage():
     return render_template('homepage.html')
 
 # Start of the resume-generation process
-@app.route('/form/', methods = ['GET', 'POST'])
-def resume_info_form():
+@app.route('/resume/', methods = ['GET', 'POST'])
+def resume():
     if request.method == 'GET':
         return render_template('form.html')
     else:
         data = UserData(request.form)
         response = make_response(redirect(url_for('resume')))
+        pdf = generate_pdf_resume(data)
         response.set_cookie(serialize(data))
-        return response
-
-@app.route('/resume/')
-def resume_generator():
-    data = deserialize(request.cookies.get('form_data'))
-    pdf = generate_pdf_resume(data)
-    return render_template('resume.html', pdf=pdf)
+        return render_template('resume.html', pdf=pdf)
 
 # Page about making resumes
 @app.route('/info/')
