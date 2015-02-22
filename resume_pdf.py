@@ -9,7 +9,7 @@ from reportlab.lib.units import inch
  
 
 def get_secure_filename():
-    return '~/test.pdf'
+    return 'test.pdf'
     s = str(time()).replace('.', '')
     s+= str(random())[2:]
     return '/tmp/resumes/' + '.pdf'
@@ -25,5 +25,3 @@ def generate_pdf_from_data(data):
     Story.append(Spacer(1, 12))
 
     doc.build(Story)
-    doc.save()
-    return doc
