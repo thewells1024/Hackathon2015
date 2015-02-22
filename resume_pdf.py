@@ -23,7 +23,6 @@ def generate_pdf_from_data(data):
     styles=getSampleStyleSheet()
     styles.add(ParagraphStyle(name='Center', alignment=TA_CENTER))
     styles.add(ParagraphStyle(name='Left', alignment=TA_LEFT))
-    styles.add(ParagraphStyle(name='Right', alignment=TA_RIGHT))
     
     Story.append(Paragraph('<font size=18>%s</font>' % data.personal_info['name'], styles["Center"]))
     Story.append(Spacer(1, 12))
@@ -32,14 +31,31 @@ def generate_pdf_from_data(data):
     Story.append(Paragraph('<font size=10>%s</font>' % data.personal_info['location'], styles["Center"]))
     Story.append(Spacer(1, 24))
  
-    Story.append(Paragraph('<font size=12 style=bold>Education</font>', styles["Left"]))    
-    Story.append(Paragraph('<font size=12>%s</font>' % data.education[0]['name'], styles["Left"]))
+    Story.append(Paragraph('<font size=12><b>Education</b></font>', styles["Left"]))    
+    for school in data.education:
+        Story.append(Paragraph('<font size=12>%s, %s</font>' % (school['name'], school['location']), styles["Left"]))
+        Story.append(Paragraph('<font size=12>%s, %s (expected graduation %s)</font>' % (school['degree'], school['status'], school['year']), styles["Left"]))
+        Story.append(Paragraph('<font size=12>%s</font>' % school['gpa'], styles['Left']))
+        Story.append(Spacer(1, 12))
     
-    Story.append(Paragraph('<font size=12 bold>Experience</font>', styles["Left"]))
+    if data.experience:
+        Story.append(Paragraph('<font size=12><b>Experience</b></font>', styles["Left"]))
+        for job in data.experience:
+            Story.append(Paragraph('<font size=12>%s, %s %s %s %s</font>' % (job['position'], job['employer'], job['location'], job['time_period']), styles["Left"]))
+            for comment in job['comments']:
+                Story.append(Paragraph('<font size=12>%s</font>' % comment, styles['Left']))
+            Story.append(Spacer(1, 12))
+    
+    if data.projects:
+        Story.append(Paragraph('<font size=12><b>Projects</b></font>', styles["Left"]))
+        for item in data.projects:
+            Story.append(Paragraph('<font size=12>%s</font>' % item['title'], styles["Left"]))
+            Story.append(Paragraph('<font size=12>%s</font>' % item['summary'], styles["Left"]))
+            for comment in item['comments']:
+                Story.append(Paragraph('<font size=12>%s</font>' % comment, styles['Left']))
+            Story.append(Spacer(1, 12))
 
-    Story.append(Paragraph('<font size=12 style=bold>Projects</font>', styles["Left"]))
-
-    Story.append(Paragraph('<font size=12 style=bold>Skills</font>', styles["Left"]))
+    Story.append(Paragraph('<font size=12><b>Skills</b></font>', styles["Left"]))
     for skill in data.skills:
         Story.append(Paragraph('<font size=12>%s</font>' % skill, styles['Left']))
 
