@@ -1,5 +1,6 @@
 from flask import Flask, make_response, redirect, request, render_template, url_for
 from resume_data import UserData
+from resume_pdf import generate_pdf_from_data
 
 app = Flask(__name__)
 
@@ -11,13 +12,13 @@ def homepage():
 # Start of the resume-generation process
 @app.route('/resume/', methods = ['GET', 'POST'])
 def resume():
-    if request.method == 'GET':
+    if request.method == 'GET' and request.cookies.get(':'
         return render_template('form.html')
     else:
         data = UserData(request.form)
         response = make_response(redirect(url_for('resume')))
         pdf = generate_pdf_resume(data)
-        response.set_cookie(serialize(data))
+        response.set_cookie(('data_cookie', serialize(data))
         return render_template('resume.html', pdf=pdf)
 
 # Page about making resumes

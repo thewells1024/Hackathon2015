@@ -9,13 +9,14 @@ from reportlab.lib.units import inch
  
 
 def get_secure_filename():
-    return 'test.pdf'
+    return '/static/resumes/test.pdf'
     s = str(time()).replace('.', '')
     s+= str(random())[2:]
-    return '/tmp/resumes/' + '.pdf'
+    return '/static/resumes/' + s + '.pdf'
 
 def generate_pdf_from_data(data):
-    doc = SimpleDocTemplate(get_secure_filename(),pagesize=letter, rightMargin=72,leftMargin=72,topMargin=72,bottomMargin=18)
+    filename = get_secure_filename()
+    doc = SimpleDocTemplate(filename,pagesize=letter, rightMargin=72,leftMargin=72,topMargin=72,bottomMargin=18)
     Story=[]
     
     styles=getSampleStyleSheet()
@@ -38,3 +39,4 @@ def generate_pdf_from_data(data):
     Story.append(Paragraph(ptext, styles["Left"]))
 
     doc.build(Story)
+    return filename 
