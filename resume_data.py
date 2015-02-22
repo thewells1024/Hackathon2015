@@ -14,12 +14,13 @@ skills                 list(str)                         = ["A string", "Another
 
 """
 
-def dict_count(fd, string):
-    return [x for x in fd.keys() if x.find(string) >= 0 ]
 
-def dict_sketchy_shit(fd, string, keys):
+def dict_count(fd, string, search):
+    return len([x for x in fd.keys() if x.find(string) >= 0 and x.find(search) >= 0])
+
+def dict_sketchy_shit(fd, string, search, keys):
     temp = []
-    for i in range(dict_count(fd, string)):
+    for i in range(dict_count(fd, string, search)):
         temp.append({})
         for k in keys:
             temp[i][k] = fd[string+str(i)+k]
@@ -52,11 +53,11 @@ class UserData:
         pi['email'] = fd['email']
         self.personal_info = pi
 
-        self.education = dict_sketchy_shit(fd, "school", ["name", "degree", "status", "year"])
+        self.education = dict_sketchy_shit(fd, "school", "name", ["name", "degree", "status", "year"])
 
-        self.work_experience = dict_sketchy_shit(fd, "job", ["position", "employer", "location", "time_period", "comments"])
+        self.work_experience = dict_sketchy_shit(fd, "job", "employer", ["employer", "location", "time_period", "comments"])
 
-        self.projects = dict_sketchy_shit(fd, "project", ["title", "summary", "comments"])
+        self.projects = dict_sketchy_shit(fd, "project", "title", ["title", "summary", "comments"])
         
         self.skills = [skill for skill in fd['skills'].split("\n")]
     
@@ -71,11 +72,12 @@ class UserData:
             s += skill + ", "
         s = s[0:len(s) - 3]
         s += " >"
+        return s
     
     # Takes a python object and returns a python file descriptor to /static/tmp/<session_id>_<secure_filename>.pdf containing the pdf resume
     def generate_pdf_resume(self):
         pass
 
 if __name__ == '__main__':
-    formDict = {"name":"Kent Kawahara", "phone":"(951) 314-1525", "location":"San Luis Obispo, CA", "email":"kkawahar@calpoly.edu", "school0name": "Cal Poly", "school0degree": "BS Computer Engineering", "school0status": "in progress", "school0year": "2018", "job0position": "Counselor in Training", "job0employer": "Camp Conrad-Chinnock", "job0location": "Angelus Oaks, CA", "job0time_period": "2014", "job0comments": "Worked to provide kids with type 1 diabetes a good camping experience\nResponsibilities included serving food, assisting in activity areas such as the pool and the crafts area\nAssisted counselors in checking the campers’ blood glucoses\nTaught me about the work that it takes to run an organized program.", "project0Title": "Card Game", "project0summary": "Worked in a small team to implement a card game in Java.", "project0comments": "Gained experience developing software in a small group setting \nStrengthen knowledge of Git.", "skills": "Knowledge of Microsoft Office and Apple equivalents.\nA working knowledge of Java, C++, Git, HTML, CSS, and PHP.\nExperience with C, Objective-C, JavaScript, Swift, Python, and BASH script.\nModerate knowledge of French."}
+    formDict = {"name":"Kent Kawahara", "phone":"(951) 314-1525", "location":"San Luis Obispo, CA", "email":"kkawahar@calpoly.edu", "school0name": "Cal Poly", "school0degree": "BS Computer Engineering", "school0status": "in progress", "school0year": "2018", "job0position": "Counselor in Training", "job0employer": "Camp Conrad-Chinnock", "job0location": "Angelus Oaks, CA", "job0time_period": "2014", "job0comments": "Worked to provide kids with type 1 diabetes a good camping experience\nResponsibilities included serving food, assisting in activity areas such as the pool and the crafts area\nAssisted counselors in checking the campers’ blood glucoses\nTaught me about the work that it takes to run an organized program.", "project0title": "Card Game", "project0summary": "Worked in a small team to implement a card game in Java.", "project0comments": "Gained experience developing software in a small group setting \nStrengthen knowledge of Git.", "skills": "Knowledge of Microsoft Office and Apple equivalents.\nA working knowledge of Java, C++, Git, HTML, CSS, and PHP.\nExperience with C, Objective-C, JavaScript, Swift, Python, and BASH script.\nModerate knowledge of French."}
     print UserData(formDict).serialize()
