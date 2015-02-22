@@ -12,13 +12,17 @@ def homepage():
 # Start of the resume-generation process
 @app.route('/resume/', methods = ['GET', 'POST'])
 def resume():
-    if request.method == 'GET' and request.cookies.get(':'
+    if request.method == 'GET' and request.cookies.get('data_cookie') == None:
         return render_template('form.html')
-    else:
+    elif request.cookies.get('data_cookie') == None:
         data = UserData(request.form)
         response = make_response(redirect(url_for('resume')))
         pdf = generate_pdf_resume(data)
         response.set_cookie(('data_cookie', serialize(data))
+        return render_template('resume.html', pdf=pdf)
+    else:
+        data = UserData(request.cookies.get('data_cookie')
+        pdf = generate_pdf_resume(data)
         return render_template('resume.html', pdf=pdf)
 
 # Page about making resumes
