@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block body %}
+{% if pdf %}
 <h3>This is the generated resume page</h3>
-<!-- put generate pdf here -->
-{% endblock %}
-{% block extrascript %}
-<!-- put pdf.js here -->
+<iframe src="{{pdf}}"></iframe>
+{% else %}
+{% endif %}
 {% endblock %}
