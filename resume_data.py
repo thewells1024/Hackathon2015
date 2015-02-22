@@ -12,13 +12,15 @@ projects             list(dict(str:str))             = [ {"title": "Resume Websi
 skills                 list(str)                         = ["A string", "Another string", "A third string", "Fourth string quarterback"]
 
 """
+school0name
+01234567890
 
-def dict_count(fd, string):
-    return len([x for x in fd.keys() if x.find(string) >= 0])
+def dict_count(fd, string, search):
+    return len([x for x in fd.keys() if x[:6] == string and x[7:] == search])
 
-def dict_sketchy_shit(fd, string, keys):
+def dict_sketchy_shit(fd, string, search, keys):
     temp = []
-    for i in range(dict_count(fd, string)):
+    for i in range(dict_count(fd, string, search)):
         temp.append({})
         for k in keys:
             temp[i][k] = fd[string+str(i)+k]
@@ -41,11 +43,11 @@ class UserData:
         pi['email'] = fd['email']
         self.personal_info = pi
 
-        self.education = dict_sketchy_shit(fd, "school", ["name", "degree", "status", "year"])
+        self.education = dict_sketchy_shit(fd, "school", "name", ["name", "degree", "status", "year"])
 
-        self.work_experience = dict_sketchy_shit(fd, "job", ["employer", "location", "time period", "comments"])
+        self.work_experience = dict_sketchy_shit(fd, "job", "employer", ["employer", "location", "time period", "comments"])
 
-        self.projects = dict_sketchy_shit(fd, "project", ["title", "summary", "comments"])
+        self.projects = dict_sketchy_shit(fd, "project", "title", ["title", "summary", "comments"])
         
         self.skills = [skill for skill in fd['skills'].split("\n")]
     
