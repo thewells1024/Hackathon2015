@@ -28,7 +28,7 @@ def resume_generator():
 # Page about making resumes
 @app.route('/info/')
 def resume_info():
-    return render_template('resume_info.html')
+    return render_template('info.html')
 
 @app.route('/about/')
 def about():
