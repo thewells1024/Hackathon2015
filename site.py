@@ -18,7 +18,7 @@ def resume():
         data = UserData(request.form)
         response = make_response(redirect(url_for('resume')))
         pdf = generate_pdf_from_data(data)
-        response.set_cookie(('data_cookie', serialize(data))
+        response.set_cookie('data_cookie', serialize(data))
         return render_template('resume.html', pdf=pdf)
     else:
         data = UserData(request.cookies.get('data_cookie'))
