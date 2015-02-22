@@ -1,4 +1,4 @@
-import time import time
+from time import time
 from random import randrange
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
