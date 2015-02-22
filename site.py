@@ -1,5 +1,5 @@
 from flask import Flask, make_response, redirect, request, render_template, url_for
-from resume_data import UserData
+from resume_data import UserData, deserialize
 from resume_pdf import generate_pdf_from_data
 
 app = Flask(__name__)
@@ -16,12 +16,12 @@ def resume():
         return render_template('form.html')
     elif request.cookies.get('data_cookie') == None:
         data = UserData(request.form)
-        response = make_response(redirect(url_for('resume')))
         pdf = generate_pdf_from_data(data)
+        response = make_response(render_template('resume.html', pdf=pdf))
         response.set_cookie('data_cookie', serialize(data))
-        return render_template('resume.html', pdf=pdf)
+        return response
     else:
-        data = UserData(request.cookies.get('data_cookie'))
+        data = deserialize(request.cookies.get('data_cookie'))
         pdf = generate_pdf_from_data(data)
         return render_template('resume.html', pdf=pdf)
 

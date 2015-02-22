@@ -29,6 +29,10 @@ def serialize_lod(string, dict):
     s += " >\n"
     return s
 
+# Takes a cookie string and returns an instance of UserData
+def deserialize(cookie):
+    pass
+
 class UserData:
     def __init__(self, fd):
         pi = {}
