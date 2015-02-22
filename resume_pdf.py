@@ -1,5 +1,5 @@
 from time import time
-from random import randrange
+from random import random
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT, TA_CENTER
@@ -7,9 +7,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
  
-
 def get_secure_filename():
-    return '/static/resumes/test.pdf'
     s = str(time()).replace('.', '')
     s+= str(random())[2:]
     return '/static/resumes/' + s + '.pdf'
@@ -24,19 +22,23 @@ def generate_pdf_from_data(data):
     styles.add(ParagraphStyle(name='Left', alignment=TA_CENTER))
     styles.add(ParagraphStyle(name='Right', alignment=TA_CENTER))
     
-    ptext = '<font size=18>%s</font>' % data.personal_info['name'] 
-    Story.append(Paragraph(ptext, styles["Center"]))
+    Story.append(Paragraph('<font size=18>%s</font>' % data.personal_info['name'], styles["Center"]))
     Story.append(Spacer(1, 12))
-    ptext = '<font size=10>%s</font>' % data.personal_info['phone'] 
-    Story.append(Paragraph(ptext, styles["Center"]))
-    ptext = '<font size=10>%s</font>' % data.personal_info['email'] 
-    Story.append(Paragraph(ptext, styles["Center"]))
-    ptext = '<font size=10>%s</font>' % data.personal_info['location'] 
-    Story.append(Paragraph(ptext, styles["Center"]))
+    Story.append(Paragraph('<font size=10>%s</font>' % data.personal_info['phone'], styles["Center"]))
+    Story.append(Paragraph('<font size=10>%s</font>' % data.personal_info['email'], styles["Center"]))
+    Story.append(Paragraph('<font size=10>%s</font>' % data.personal_info['location'], styles["Center"]))
     Story.append(Spacer(1, 24))
+ 
+    Story.append(Paragraph('<font size=12 style=bold>Education</font>', styles["Left"]))    
+    Story.append(Paragraph('<font size=12>%s</font>' % data.education[0]['name'], styles["Left"]))
+    
+    Story.append(Paragraph('<font size=12 style=bold>Experience</font>', styles["Left"]))
 
-    ptext = '<font size=12>%s</font>' % data.education['school' + i + 'name']
-    Story.append(Paragraph(ptext, styles["Left"]))
+    Story.append(Paragraph('<font size=12 style=bold>Projects</font>', styles["Left"]))
+
+    Story.append(Paragraph('<font size=12 style=bold>Skills</font>', styles["Left"]))
+    for skill in data.skills:
+        Story.append(Paragraph('<font size=12>%s</font>' % skill, styles['Left']))
 
     doc.build(Story)
     return filename 

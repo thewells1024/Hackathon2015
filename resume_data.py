@@ -4,7 +4,7 @@
 """
 personal_info         dict(str:str)                     = {"name": "John Smith", "phone": "(123) 456-7890", "location": "Canada", "email": "jsmith@calpoly.edu"}
 
-education             list(dict(str:str))             = [ {"school_name": "Cuesta", "degree": "BS Things", "status": "in progress", "year": "2018"} ]
+education             list(dict(str:str))             = [ {"name": "Cuesta", "location": "SLO", "degree": "BS Things", "status": "in progress", "year": "2018"} ]
 
 work_experience     list(dict(str:str))             = [ {"employer": "Stringy.com", "location": "Anytown, USA", "time period": "2013-2014", "comments": ["str1", "str2", "str3"]}]
 
