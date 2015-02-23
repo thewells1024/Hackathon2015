@@ -13,8 +13,8 @@ def homepage():
 @app.route('/resume/', methods = ['GET', 'POST'])
 def resume():
     if request.method == 'GET' and request.cookies.get('data_cookie') == None:
-        return render_template('form.html')
-    elif request.cookies.get('data_cookie') == None:
+        return render_template('resume.html', pdf=None)
+    #elif request.cookies.get('data_cookie') == None:
         data = UserData(request.form)
         pdf = generate_pdf_from_data(data)
         return render_template('resume.html', pdf=pdf)
@@ -22,8 +22,8 @@ def resume():
         #response.set_cookie('data_cookie', serialize(data))
         #return response
     else:
-        pass
-        data = deserialize(request.cookies.get('data_cookie'))
+        #data = deserialize(request.cookies.get('data_cookie'))
+        data = UserData(request.form)
         pdf = generate_pdf_from_data(data)
         return render_template('resume.html', pdf=pdf)
 
