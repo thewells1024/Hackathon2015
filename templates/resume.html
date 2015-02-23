@@ -2,7 +2,7 @@
 {% block body %}
 {% if pdf %}
 <h3>This is the generated resume page</h3>
-<iframe src="{{ pdf }}"></iframe>
+<iframe src="{{ pdf }}" width="100%" height="400px"></iframe>
 {% else %}
 <h3>Fill out this form to have a resume generated for you!</h3>
 <form class="form" method="post">
@@ -24,6 +24,8 @@
     <input type="text" name="school0status" required><br>
     <p>School 1 Year Graduated (or will graduate):<br></p>
     <input type="text" name="school0year" required><br>
+    <p>School 1 GPA (if over 3.0)<br></p>
+    <input type="text" name="school0gpa"><br>
     <p>School 2 Name:<br></p>
     <input type="text" name="school1name"><br>
     <p>School 2 Location:<br></p>
@@ -34,6 +36,8 @@
     <input type="text" name="school1status"><br>
     <p>School 2 Year Graduated (or will graduate):<br></p>
     <input type="text" name="school1year"><br>
+    <p>School 2 GPA (if over 3.0)<br></p>
+    <input type="text" name="school1gpa"><br>
     <p>School 3 Name:<br></p>
     <input type="text" name="school2name"><br>
     <p>School 3 Location:<br></p>
@@ -44,6 +48,8 @@
     <input type="text" name="school2status"><br>
     <p>School 3 Year Graduated (or will graduate):<br></p>
     <input type="text" name="school2year"><br>
+    <p>School 3 GPA (if over 3.0)<br></p>
+    <input type="text" name="school2gpa"><br>
     <p>Job 1 Position:<br></p>
     <input type="text" name="job0position"><br>
     <p>Job 1 Employer:<br></p>

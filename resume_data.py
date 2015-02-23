@@ -8,22 +8,22 @@ def parse_dict(fd, string, search, keys):
     for i in range(dict_count(fd, string, search)):
         temp.append({})
         for k in keys:
-            temp[i][k] = fd[string+str(i)+k]
+            temp[i][k] = ''.join(fd[string+str(i)+k])
     return temp
 
-def serialize_dict(dict):
+def serialize_dict(d):
     s = "{ "
-    for key in dict.keys():
-        if len(dict[key]) == 0:
+    for key in d.keys():
+        if len(''.join(d[key])) == 0:
             continue
-        s += "|" + key + ":" + dict[key] + "| "
+        s += "|" + key + ":" + ''.join(d[key]) + "| "
     s += "} "
     return s
 
-def serialize_lod(string, dict):
+def serialize_lod(string, d):
     s = ""
     s += string + " < "
-    for e in dict:
+    for e in d:
         s += serialize_dict(e) + ", "
     s = s[0:len(s) - 3]
     s += " >\n"
@@ -36,10 +36,10 @@ def deserialize(cookie):
 class UserData:
     def __init__(self, fd):
         pi = {}
-        pi['name'] = fd['name']
-        pi['phone'] = fd['phone']
-        pi['location'] = fd['location']
-        pi['email'] = fd['email']
+        pi['name'] = ''.join(fd['name'])
+        pi['phone'] = ''.join(fd['phone'])
+        pi['location'] = ''.join(fd['location'])
+        pi['email'] = ''.join(fd['email'])
         self.personal_info = pi
 
         self.education = parse_dict(fd, "school", "name", ["name", "location", "degree", "gpa", "status", "year"])
@@ -48,7 +48,7 @@ class UserData:
 
         self.projects = parse_dict(fd, "project", "title", ["title", "summary", "comments"])
         
-        self.skills = [skill for skill in fd['skills'].split("\n")]
+        self.skills = [skill for skill in ''.join(fd['skills']).split('\r\n')]
     
     # Takes a python object and returns an object for a cookie
     def serialize(self):
@@ -64,7 +64,7 @@ class UserData:
         return s
 
 if __name__ == '__main__':
-    formDict = {"name":"Kent Kawahara", "phone":"(951) 314-1525", "location":"San Luis Obispo, CA", "email":"kkawahar@calpoly.edu", "school0name": "Cal Poly", "school0location": "SLO", "school0degree": "BS Computer Engineering", "school0gpa": "4.0", "school0status": "in progress", "school0year": "2018", "job0position": "Counselor in Training", "job0employer": "Camp Conrad-Chinnock", "job0location": "Angelus Oaks, CA", "job0time_period": "2014", "job0comments": "Worked to provide kids with type 1 diabetes a good camping experience\nResponsibilities included serving food, assisting in activity areas such as the pool and the crafts area\nAssisted counselors in checking the campers' blood glucoses\nTaught me about the work that it takes to run an organized program.", "project0title": "Card Game", "project0summary": "Worked in a small team to implement a card game in Java.", "project0comments": "Gained experience developing software in a small group setting \nStrengthen knowledge of Git.", "skills": "Knowledge of Microsoft Office and Apple equivalents.\nA working knowledge of Java, C++, Git, HTML, CSS, and PHP.\nExperience with C, Objective-C, JavaScript, Swift, Python, and BASH script.\nModerate knowledge of French."}
+    formDict = {u'name':u'Kent Kawahara', u'phone':u'(951) 314-1525', u'location':u'San Luis Obispo, CA', u'email':u'kkawahar@calpoly.edu', u'school0name': u'Cal Poly', u'school0location': u'SLO', u'school0degree': u'BS Computer Engineering', u'school0gpa': u'4.0', u'school0status': u'in progress', u'school0year': u'2018', u'job0position': u'Counselor in Training', u'job0employer': u'Camp Conrad-Chinnock', u'job0location': u'Angelus Oaks, CA', u'job0time_period': u'2014', u'job0comments': u'Worked to provide kids with type 1 diabetes a good camping experience\nResponsibilities included serving food, assisting in activity areas such as the pool and the crafts area\nAssisted counselors in checking the campers blood glucoses\nTaught me about the work that it takes to run an organized program.', u'project0title': u'Card Game', u'project0summary': u'Worked in a small team to implement a card game in Java.', u'project0comments': u'Gained experience developing software in a small group setting \nStrengthen knowledge of Git.', u'skills': u'Knowledge of Microsoft Office and Apple equivalents.\nA working knowledge of Java, C++, Git, HTML, CSS, and PHP.\nExperience with C, Objective-C, JavaScript, Swift, Python, and BASH script.\nModerate knowledge of French.'}
     from resume_pdf import generate_pdf_from_data as g
     u = UserData(formDict)
     print u.serialize()
