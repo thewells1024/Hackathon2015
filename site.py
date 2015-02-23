@@ -1,4 +1,4 @@
-from flask import Flask, make_response, redirect, request, render_template, url_for
+from flask import Flask, make_response, request, render_template
 from resume_data import UserData, deserialize
 from resume_pdf import generate_pdf_from_data
 
@@ -15,9 +15,8 @@ def resume():
     if request.method == 'GET': # and request.cookies.get('data_cookie') == None:
         return render_template('resume.html', pdf=None)
     #elif request.cookies.get('data_cookie') == None:
-        data = UserData(request.form)
-        pdf = generate_pdf_from_data(data)
-        return render_template('resume.html', pdf=pdf)
+        #data = UserData(request.form)
+        #pdf = generate_pdf_from_data(data)
         #response = make_response(render_template('resume.html', pdf=pdf))
         #response.set_cookie('data_cookie', serialize(data))
         #return response
