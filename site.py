@@ -12,7 +12,7 @@ def homepage():
 # Start of the resume-generation process
 @app.route('/resume/', methods = ['GET', 'POST'])
 def resume():
-    if request.method == 'GET' and request.cookies.get('data_cookie') == None:
+    if request.method == 'GET': # and request.cookies.get('data_cookie') == None:
         return render_template('resume.html', pdf=None)
     #elif request.cookies.get('data_cookie') == None:
         data = UserData(request.form)
