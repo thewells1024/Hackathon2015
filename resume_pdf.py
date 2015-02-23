@@ -36,7 +36,7 @@ def generate_pdf_from_data(data):
     Story.append(Paragraph('<font size=12><b>Education</b></font>', styles["Left"]))    
     for school in data.education:
         Story.append(Paragraph('<font size=12>%s, %s</font>' % (school['name'], school['location']), styles["Left"]))
-        Story.append(Paragraph('<font size=12>%s, %s (expected graduation %s)</font>' % (school['degree'], school['status'], school['year']), styles["Left"]))
+        Story.append(Paragraph('<font size=12>%s, %s (graduation year %s)</font>' % (school['degree'], school['status'], school['year']), styles["Left"]))
         Story.append(Paragraph('<font size=12>GPA: %s</font>' % school['gpa'], styles['Left']))
         Story.append(Spacer(1, 12))
     
