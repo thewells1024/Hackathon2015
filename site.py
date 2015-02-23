@@ -17,10 +17,12 @@ def resume():
     elif request.cookies.get('data_cookie') == None:
         data = UserData(request.form)
         pdf = generate_pdf_from_data(data)
-        response = make_response(render_template('resume.html', pdf=pdf))
-        response.set_cookie('data_cookie', serialize(data))
-        return response
+        return render_template('resume.html', pdf=pdf)
+        #response = make_response(render_template('resume.html', pdf=pdf))
+        #response.set_cookie('data_cookie', serialize(data))
+        #return response
     else:
+        pass
         data = deserialize(request.cookies.get('data_cookie'))
         pdf = generate_pdf_from_data(data)
         return render_template('resume.html', pdf=pdf)
