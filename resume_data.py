@@ -3,7 +3,7 @@
 def dict_count(fd, string, search):
     return len([x for x in fd.keys() if x.find(string) >= 0 and x.find(search) >= 0])
 
-def dict_sketchy_shit(fd, string, search, keys):
+def sketchy_parse_dict(fd, string, search, keys):
     temp = []
     for i in range(dict_count(fd, string, search)):
         temp.append({})
@@ -42,11 +42,11 @@ class UserData:
         pi['email'] = fd['email']
         self.personal_info = pi
 
-        self.education = dict_sketchy_shit(fd, "school", "name", ["name", "location", "degree", "gpa", "status", "year"])
+        self.education = sketchy_parse_dict(fd, "school", "name", ["name", "location", "degree", "gpa", "status", "year"])
 
-        self.work_experience = dict_sketchy_shit(fd, "job", "position", ["position", "employer", "location", "time_period", "comments"])
+        self.work_experience = sketchy_parse_dict(fd, "job", "position", ["position", "employer", "location", "time_period", "comments"])
 
-        self.projects = dict_sketchy_shit(fd, "project", "title", ["title", "summary", "comments"])
+        self.projects = sketchy_parse_dict(fd, "project", "title", ["title", "summary", "comments"])
         
         self.skills = [skill for skill in fd['skills'].split("\n")]
     
