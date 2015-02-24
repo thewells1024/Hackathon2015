@@ -14,7 +14,7 @@ def parse_dict(fd, string, search, keys):
     return temp
 
 def serialize_dict(d):
-    s = "{ "
+    s = "{"
     for key in d.keys():
         if len(''.join(d[key])) == 0:
             continue
@@ -24,15 +24,9 @@ def serialize_dict(d):
 
 def serialize_lod(string, d):
     s = ""
-<<<<<<< HEAD
     s += string + "<"
-    for e in dict:
-        s += serialize_dict(e) + "^.^"
-=======
-    s += string + " < "
     for e in d:
-        s += serialize_dict(e) + ", "
->>>>>>> 75e3314842b6d3e9f6698a4bf93c949ea45f24b1
+        s += serialize_dict(e) + "^.^"
     s = s[0:len(s) - 3]
     s += ">"
     return s
@@ -43,7 +37,7 @@ def deserialize_dict(string):
     for pair in dict_list:
         semi = pair.find(":")
         if semi != -1:
-            dict[pair[:semi]] = pair[semi + 1:len(pair) - 1]
+            dict[pair[:semi]] = pair[semi + 1:]
     return dict
 
 def deserialize_lod(string, identifier):
@@ -81,7 +75,7 @@ def deserialize(cookie):
             s = ""
             for item in myList:
                 s += item + "\n"
-            s[:len(s) - 1]
+            s = s[:len(s) - 1]
             formData["skills"] = s
     print formData
     return UserData(formData)
@@ -115,11 +109,11 @@ class UserData:
         
 
 if __name__ == '__main__':
-    formDict = {u'name':u'Kent Kawahara', u'phone':u'(951) 314-1525', u'location':u'San Luis Obispo, CA', u'email':u'kkawahar@calpoly.edu', u'school0name': u'Cal Poly', u'school0location': u'SLO', u'school0degree': u'BS Computer Engineering', u'school0gpa': u'4.0', u'school0status': u'in progress', u'school0year': u'2018', u'job0position': u'Counselor in Training', u'job0employer': u'Camp Conrad-Chinnock', u'job0location': u'Angelus Oaks, CA', u'job0time_period': u'2014', u'job0comments': u'Worked to provide kids with type 1 diabetes a good camping experience\nResponsibilities included serving food, assisting in activity areas such as the pool and the crafts area\nAssisted counselors in checking the campers blood glucoses\nTaught me about the work that it takes to run an organized program.', u'project0title': u'Card Game', u'project0summary': u'Worked in a small team to implement a card game in Java.', u'project0comments': u'Gained experience developing software in a small group setting \nStrengthen knowledge of Git.', u'skills': u'Knowledge of Microsoft Office and Apple equivalents.\nA working knowledge of Java, C++, Git, HTML, CSS, and PHP.\nExperience with C, Objective-C, JavaScript, Swift, Python, and BASH script.\nModerate knowledge of French.'}
+    formDict = {"name":"Kent Kawahara", "phone":"(951) 314-1525", "location":"San Luis Obispo, CA", "email":"kkawahar@calpoly.ed", "school0name": "Cal Poly", "school0location": "SLO", "school0degree": "BS Computer Engineering", "school0gpa": "4.0", "school0status": "in progress", "school0year": "2018", "job0position": "Counselor in Training", "job0employer": "Camp Conrad-Chinnock", "job0location": "Angelus Oaks, CA", "job0time_period": "2014", "job0comments": "Worked to provide kids with type 1 diabetes a good camping experience\nResponsibilities included serving food, assisting in activity areas such as the pool and the crafts area\nAssisted counselors in checking the campers blood glucoses\nTaught me about the work that it takes to run an organized program.", "project0title": "Card Game", "project0summary": "Worked in a small team to implement a card game in Java.", "project0comments": "Gained experience developing software in a small group setting \nStrengthen knowledge of Git.", "skills": "Knowledge of Microsoft Office and Apple equivalents.\nA working knowledge of Java, C++, Git, HTML, CSS, and PHP.\nExperience with C, Objective-C, JavaScript, Swift, Python, and BASH script.\nModerate knowledge of French."}
     from resume_pdf import generate_pdf_from_data as g
     u = UserData(formDict)
     my_str = u.serialize()
-    print my_str
+    print my_str + "\n\n\n"
     uPrime = deserialize(my_str)
     print uPrime.serialize()
     g(u)
