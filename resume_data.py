@@ -1,4 +1,5 @@
 # For handling the user data in a clean-ish and standardized way
+# coding=UTF-8
 
 import json
 
