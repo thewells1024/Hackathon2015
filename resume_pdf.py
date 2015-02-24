@@ -47,7 +47,7 @@ def generate_pdf_from_data(data):
         Story.append(Paragraph('<font size=12><b>Experience</b></font>', styles['Left']))
         for job in data.work_experience:
             Story.append(Paragraph('<font size=12>%s, %s %s %s</font>' % (job['position'], job['employer'], job['location'], job['time_period']), styles['Left']))
-            for comment in job['comments']:
+            for comment in job['comments'].split("\n"):
                 Story.append(Paragraph('<font size=12>%s</font>' % comment, styles['Left']))
             Story.append(Spacer(1, 12))
     
@@ -56,7 +56,7 @@ def generate_pdf_from_data(data):
         for item in data.projects:
             Story.append(Paragraph('<font size=12>%s</font>' % item['title'], styles['Left']))
             Story.append(Paragraph('<font size=12>%s</font>' % item['summary'], styles['Left']))
-            for comment in item['comments']:
+            for comment in item['comments'].split("\n"):
                 Story.append(Paragraph('<font size=12>%s</font>' % comment, styles['Left']))
             Story.append(Spacer(1, 12))
 

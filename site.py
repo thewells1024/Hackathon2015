@@ -17,6 +17,7 @@ def resume():
     #elif request.cookies.get('data_cookie') != None:
         #pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
     else:
+        print dict(request.form)
         data = UserData(dict(request.form))
         pdf = generate_pdf_from_data(data)
         #response = make_response(render_template('resume.html', pdf=pdf))

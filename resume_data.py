@@ -1,5 +1,4 @@
 # For handling the user data in a clean-ish and standardized way
-# coding=UTF-8
 
 import json
 
@@ -9,9 +8,11 @@ def dict_count(fd, string, search):
 def parse_dict(fd, string, search, keys):
     temp = []
     for i in range(dict_count(fd, string, search)):
-        temp.append({})
-        for k in keys:
-            temp[i][k] = ''.join(fd[string+str(i)+k])
+        print str(fd[string + str(i) + search])
+        if str(fd[string + str(i) + search]) != 0:
+            temp.append({})
+            for k in keys:
+                temp[i][k] = ''.join(fd[string+str(i)+k])
     return temp
 
 def serialize_dict(d):
@@ -117,5 +118,4 @@ if __name__ == '__main__':
     print my_str + "\n\n\n"
     uPrime = deserialize(my_str)
     print uPrime.serialize()
-    print 
-    g(u)
+    print g(u)
