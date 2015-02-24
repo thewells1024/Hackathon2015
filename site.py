@@ -1,4 +1,4 @@
-from flask import Flask, make_response, redirect, request, render_template, url_for
+from flask import Flask, make_response, request, render_template
 from resume_data import UserData, deserialize
 from resume_pdf import generate_pdf_from_data
 
@@ -10,22 +10,19 @@ def homepage():
     return render_template('homepage.html')
 
 # Start of the resume-generation process
-@app.route('/resume/', methods = ['GET', 'POST'])
+@app.route('/resume/', methods=['GET', 'POST'])
 def resume():
     if request.method == 'GET': # and request.cookies.get('data_cookie') == None:
         return render_template('resume.html', pdf=None)
-    #elif request.cookies.get('data_cookie') == None:
-        data = UserData(request.form)
+    #elif request.cookies.get('data_cookie') != None:
+        #pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
+    else:
+        data = UserData(dict(request.form))
         pdf = generate_pdf_from_data(data)
-        return render_template('resume.html', pdf=pdf)
         #response = make_response(render_template('resume.html', pdf=pdf))
         #response.set_cookie('data_cookie', serialize(data))
         #return response
-    else:
-        #data = deserialize(request.cookies.get('data_cookie'))
-        data = UserData(request.form)
-        pdf = generate_pdf_from_data(data)
-        return render_template('resume.html', pdf=pdf)
+    return render_template('resume.html', pdf=pdf)
 
 # Page about making resumes
 @app.route('/info/')
