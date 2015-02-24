@@ -9,7 +9,7 @@ def parse_dict(fd, string, search, keys):
     temp = []
     for i in range(dict_count(fd, string, search)):
         print str(fd[string + str(i) + search])
-        if str(fd[string + str(i) + search]) != 0:
+        if str(fd[string + str(i) + search]) != "[u'']":
             temp.append({})
             for k in keys:
                 temp[i][k] = ''.join(fd[string+str(i)+k])
