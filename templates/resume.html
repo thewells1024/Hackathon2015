@@ -9,123 +9,85 @@
 {% else %}
 <div class="col-xs-12 col-sm-9">
     <h3>Fill out this form to have a resume generated for you!</h3>
-    <form class="form" method="post">
+    <form class="form" name="resume_data" method="post" onsubmit="validate()">
         <div class="Jumbotron">
             <div id="Info">
-                <p>Name:<br></p>
-                <input type="text" name="name" required><br>
-                <p>Phone Number:<br></p>
-                <input type="text" name="phone" required><br>
-                <p>Location: <br></p>
-                <input type="text" name="location" required><br>
-                <p>Email Address:<br></p>
-                <input type="text" name="email" required><br>
+                <p>Name: <input type="text" name="name" class="required"></p>
+                <p>Phone Number: <input type="text" name="phone" class="required"></p>
+                <p>Location: <input type="text" name="location" class="required"></p>
+                <p>Email Address: <input type="text" name="email" class="required"></p>
             </div>
             <div id="School1">
-                <p>School 1 Name:<br></p>
-                <input type="text" name="school0name" required><br>
-                <p>School 1 Location:<br></p>
-                <input type="text" name="school0location" required><br>
-                <p>School 1 Degree:<br></p>
-                <input type="text" name="school0degree" required><br>
-                <p>School 1 Status:<br></p>
-                <input type="text" name="school0status" required><br>
-                <p>School 1 Year Graduated (or will graduate):<br></p>
-                <input type="text" name="school0year" required><br>
-                <p>School 1 GPA (if over 3.0)<br></p>
-                <input type="text" name="school0gpa"><br>
+                <p>School 1 Name: <input type="text" name="school0name" class="required"></p>
+                <p>School 1 Location: <input type="text" name="school0location" class="required"></p>
+                <p>School 1 Degree: <input type="text" name="school0degree" class="required"></p>
+                <p>School 1 Status: <input type="text" name="school0status" class="required"></p>
+                <p>School 1 Year Graduated (or will graduate): <input type="text" name="school0year" class="required"></p>
+                <p>School 1 GPA (if over 3.0): <input type="text" name="school0gpa"></p>
             </div>
             <div id="School2" style="display:none">
-                <p>School 2 Name:<br></p>
-                <input type="text" name="school1name"><br>
-                <p>School 2 Location:<br></p>
-                <input type="text" name="school1location"><br>
-                <p>School 2 Degree:<br></p>
-                <input type="text" name="school1degree"><br>
-                <p>School 2 Status:<br></p>
-                <input type="text" name="school1status"><br>
-                <p>School 2 Year Graduated (or will graduate):<br></p>
-                <input type="text" name="school1year"><br>
-                <p>School 2 GPA (if over 3.0)<br></p>
+                <p>School 2 Name: <input type="text" name="school1name"></p>
+                <p>School 2 Location: <input type="text" name="school1location"></p>
+                <p>School 2 Degree: <input type="text" name="school1degree"></p>
+                <p>School 2 Status: <input type="text" name="school1status"></p>
+                <p>School 2 Year Graduated (or will graduate): <input type="text" name="school1year"></p>
+                <p>School 2 GPA (if over 3.0) : <input type="text" name="school1gpa"></p>
             </div>
             <div id="School3" style="display:none">
-                <input type="text" name="school1gpa"><br>
-                <p>School 3 Name:<br></p>
-                <input type="text" name="school2name"><br>
-                <p>School 3 Location:<br></p>
-                <input type="text" name="school2location"><br>
-                <p>School 3 Degree:<br></p>
-                <input type="text" name="school2degree"><br>
-                <p>School 3 Status:<br></p>
-                <input type="text" name="school2status"><br>
-                <p>School 3 Year Graduated (or will graduate):<br></p>
-                <input type="text" name="school2year"><br>
-                <p>School 3 GPA (if over 3.0)<br></p>
-                <input type="text" name="school2gpa"><br>
+                <p>School 3 Name: <input type="text" name="school2name"></p>
+                <p>School 3 Location: <input type="text" name="school2location"></p>
+                <p>School 3 Degree: <input type="text" name="school2degree"></p>
+                <p>School 3 Status: <input type="text" name="school2status"></p>
+                <p>School 3 Year Graduated (or will graduate): <input type="text" name="school2year"></p>
+                <p>School 3 GPA (if over 3.0): <input type="text" name="school2gpa"></p>
             </div>
             <div id="Job1">
-                <p>Job 1 Position:<br></p>
-                <input type="text" name="job0position"><br>
-                <p>Job 1 Employer:<br></p>
-                <input type="text" name="job0employer"><br>
-                <p>Job 1 Location:<br></p>
-                <input type="text" name="job0location"><br>
-                <p>Job 1 Time Period:<br></p>
-                <input type="text" name="job0time_period"><br>
-                <p>Job 1 Comments:<br></p>
-                <textarea rows="10" cols="60" name="job0comments"></textarea><br>
+                <p>Job 1 Position: <input type="text" name="job0position"></p>
+                <p>Job 1 Employer: <input type="text" name="job0employer"></p>
+                <p>Job 1 Location: <input type="text" name="job0location"></p>
+                <p>Job 1 Time Period: <input type="text" name="job0time_period"></p>
+                <p>Job 1 Comments:</p>
+                <textarea rows="10" cols="60" name="job0comments"></textarea>
             </div>
             <div id="Job2" style="display:none">
-                <p>Job 2 Position:<br></p>
-                <input type="text" name="job1position"><br>
-                <p>Job 2 Employer:<br></p>
-                <input type="text" name="job1employer"><br>
-                <p>Job 2 Location:<br></p>
-                <input type="text" name="job1location"><br>
-                <p>Job 2 Time Period:<br></p>
-                <input type="text" name="job1time_period"><br>
-                <p>Job 2 Comments:<br></p>
-                <textarea rows="10" cols="60" name="job1comments"></textarea><br>
+                <p>Job 2 Position: <input type="text" name="job1position"></p>
+                <p>Job 2 Employer: <input type="text" name="job1employer"></p>
+                <p>Job 2 Location: <input type="text" name="job1location"></p>
+                <p>Job 2 Time Period: <input type="text" name="job1time_period"></p>
+                <p>Job 2 Comments:</p>
+                <textarea rows="10" cols="60" name="job1comments"></textarea>
             </div>
             <div id="Job3" style="display:none">
-                <p>Job 3 Position:<br></p>
-                <input type="text" name="job2position"><br>
-                <p>Job 3 Employer:<br></p>
-                <input type="text" name="job2employer"><br>
-                <p>Job 3 Location:<br></p>
-                <input type="text" name="job2location"><br>
-                <p>Job 3 Time Period:<br></p>
-                <input type="text" name="job2time_period"><br>
-                <p>Job 3 Comments:<br></p>
-                <textarea rows="10" cols="60" name="job2comments"></textarea><br>
+                <p>Job 3 Position: <input type="text" name="job2position"></p>
+                <p>Job 3 Employer: <input type="text" name="job2employer"></p>
+                <p>Job 3 Location: <input type="text" name="job2location"></p>
+                <p>Job 3 Time Period: <input type="text" name="job2time_period"></p>
+                <p>Job 3 Comments: </p>
+                <textarea rows="10" cols="60" name="job2comments"></textarea>
             </div>
             <div id="Project1">
-                <p>Project 1 Title:<br></p>
-                <input type="text" name="project0title"><br>
-                <p>Project 1 Summary:<br></p>
-                <input type="text" name="project0summary"><br>
-                <p>Project 1 Comments:<br></p>
-                <textarea rows="10" cols="60" name="project0comments"></textarea><br>
+                <p>Project 1 Title: <input type="text" name="project0title"></p>
+                <p>Project 1 Summary: <input type="text" name="project0summary"></p>
+                <p>Project 1 Comments:</p> 
+                <textarea rows="10" cols="60" name="project0comments"></textarea>
             </div>
             <div id="Project2" style="display:none">
-                <p>Project 2 Title:<br></p>
-                <input type="text" name="project1title"><br>
-                <p>Project 2 Summary:<br></p>
-                <input type="text" name="project1summary"><br>
-                <p>Project 2 Comments:<br></p>
-                <textarea rows="10" cols="60" name="project1comments"></textarea><br>
+                <p>Project 2 Title: <input type="text" name="project1title"></p>
+                <p>Project 2 Summary: <input type="text" name="project1summary"></p>
+                <p>Project 2 Comments:</p>
+                <textarea rows="10" cols="60" name="project1comments"></textarea>
             </div>
             <div id="Skills">
-                <p>Skills:<br></p>
-                <textarea rows="10" cols="60" name="skills" required></textarea><br>
+                <p>Skills:</p> 
+                <textarea rows="10" cols="60" name="skills" class="required"></textarea>
             </div>
             <input type="submit" value="Submit">
         </div>
     </form>
 </div>
+<h3 align="center">Click to toggle groups</h3>
 <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
     <div class="list-group">
-        <h3>Click to toggle groups</h3>
         <div id="InfoT" class="list-group-item" style="background-color:#999;" onclick="toggleVisibility('Info');">Basic Info</div>
         <div id="School1T"class="list-group-item" style="background-color:#999;" onclick="toggleVisibility('School1')">School 1</div>
         <div id="School2T" class="list-group-item" onclick="toggleVisibility('School2')">School 2</div>
@@ -150,6 +112,11 @@
             document.getElementById(divid).style.display = "none";
             document.getElementById(divid + "T").style.backgroundColor = "#FFF";
         }
+    }
+    
+    function validate(){
+        var rdForm = document.forms["resume_data"];
+        console.log(rdForm);
     }
 </script>
 {% endblock %}
