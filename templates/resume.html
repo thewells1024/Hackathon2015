@@ -5,6 +5,7 @@
 {% block body %}
 {% if pdf %}
 <h3>This is the generated resume page</h3>
+<a class="btn btn-info" href="/reset">Reset resume (you'll have to fill out the form again)</a>
 <iframe src="{{ pdf }}" width="100%" height="800px"></iframe>
 {% else %}
 <div class="col-xs-12 col-sm-9">
