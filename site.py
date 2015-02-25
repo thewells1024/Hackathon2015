@@ -12,18 +12,17 @@ def homepage():
 # Start of the resume-generation process
 @app.route('/resume/', methods=['GET', 'POST'])
 def resume():
-    if request.method == 'GET': # and request.cookies.get('data_cookie') == None:
+    if request.method == 'GET' and request.cookies.get('data_cookie') == None:
         return render_template('resume.html', pdf=None)
-    #elif request.cookies.get('data_cookie') != None:
-        #pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
+    elif request.cookies.get('data_cookie') != None:
+        pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
+        response = make_response(render_template('resume.html', pdf=pdf))
     else:
-        print dict(request.form)
         data = UserData(dict(request.form))
         pdf = generate_pdf_from_data(data)
-        #response = make_response(render_template('resume.html', pdf=pdf))
-        #response.set_cookie('data_cookie', serialize(data))
-        #return response
-    return render_template('resume.html', pdf=pdf)
+        response = make_response(render_template('resume.html', pdf=pdf))
+        response.set_cookie('data_cookie', data.serialize())
+    return response
 
 # Page about making resumes
 @app.route('/info/')
@@ -33,6 +32,12 @@ def resume_info():
 @app.route('/about/')
 def about():
     return render_template('about.html')
+
+@app.route('/reset/')
+def reset():
+    response = make_response(render_template('resume.html', pdf=None))
+    response.delete_cookie('data_cookie')
+    return response
 
 @app.errorhandler(404)
 def page_not_found(error):

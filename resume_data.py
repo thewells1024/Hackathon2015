@@ -12,7 +12,10 @@ def parse_dict(fd, string, search, keys):
         if str(fd[string + str(i) + search]) != "[u'']":
             temp.append({})
             for k in keys:
-                temp[i][k] = ''.join(fd[string+str(i)+k])
+                try:
+                    temp[i][k] = ''.join(fd[string+str(i)+k])
+                except KeyError:
+                    continue
     return temp
 
 def serialize_dict(d):
@@ -79,9 +82,7 @@ def deserialize(cookie):
                 s += item + "\n"
             s = s[:len(s) - 1]
             formData["skills"] = s
-    print formData
     return UserData(formData)
-            
 
 class UserData:
     def __init__(self, fd):
