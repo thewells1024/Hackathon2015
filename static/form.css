@@ -1,6 +1,3 @@
-tr.Area{
-    border-style: solid;
-    border-radius: 1px;
-    border-color: #000000;
-    min-width: 100%;
+input{
+    float: right;
 }

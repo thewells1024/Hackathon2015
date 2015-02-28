@@ -1,4 +1,5 @@
 # For handling the user data in a clean-ish and standardized way
+# coding=UTF-8
 
 import json
 
@@ -13,7 +14,7 @@ def parse_dict(fd, string, search, keys):
             temp.append({})
             for k in keys:
                 try:
-                    temp[i][k] = ''.join(fd[string+str(i)+k])
+                    temp[i][k] = u''.join(fd[string+str(i)+k])
                 except KeyError:
                     continue
     return temp
@@ -21,9 +22,9 @@ def parse_dict(fd, string, search, keys):
 def serialize_dict(d):
     s = "{"
     for key in d.keys():
-        if len(''.join(d[key])) == 0:
+        if len(u''.join(d[key])) == 0:
             continue
-        s += key + ":" + ''.join(d[key]) + ".^."
+        s += key + ":" + u''.join(d[key]) + ".^."
     s += "}"
     return s
 
@@ -84,6 +85,20 @@ def deserialize(cookie):
             formData["skills"] = s
     return UserData(formData)
 
+def validate(data):
+    try:
+        for info in data.personal_info:
+            if info == "" or info == "[u'']":
+                return false
+        for schoolInfo in data.education[0]:
+            if schoolInfo != "gpa" and (schoolInfo = "" or schoolInfo = "[u'']"):
+                return false
+        if data.skills[0] == "" or data.skills[0] == "[u'']":
+            return false
+        return true
+    except KeyError:
+        return false
+
 class UserData:
     def __init__(self, fd):
         pi = {}
@@ -95,7 +110,7 @@ class UserData:
         self.education = parse_dict(fd, "school", "name", ["name", "location", "degree", "gpa", "status", "year"])
         self.work_experience = parse_dict(fd, "job", "position", ["position", "employer", "location", "time_period", "comments"])
         self.projects = parse_dict(fd, "project", "title", ["title", "summary", "comments"])
-        self.skills = [skill for skill in ''.join(fd['skills']).split('\r\n')]
+        self.skills = [skill for skill in ''.join(fd['skills']).split('\n')]
     
     # Takes a python object and returns an object for a cookie
     def serialize(self):

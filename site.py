@@ -1,5 +1,6 @@
+# coding=UTF-8
 from flask import Flask, make_response, request, render_template
-from resume_data import UserData, deserialize
+from resume_data import UserData, deserialize, validate
 from resume_pdf import generate_pdf_from_data
 
 app = Flask(__name__)
@@ -12,16 +13,20 @@ def homepage():
 # Start of the resume-generation process
 @app.route('/resume/', methods=['GET', 'POST'])
 def resume():
-    if request.method == 'GET' and request.cookies.get('data_cookie') == None:
-        return render_template('resume.html', pdf=None)
-    elif request.cookies.get('data_cookie') != None:
-        pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
-        response = make_response(render_template('resume.html', pdf=pdf))
+    if request.method == 'GET':
+        try:
+            pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
+            response = make_response(render_template('resume.html', pdf=pdf))
+        except Exception:
+            response = render_template('resume.html', pdf=None)
     else:
         data = UserData(dict(request.form))
-        pdf = generate_pdf_from_data(data)
-        response = make_response(render_template('resume.html', pdf=pdf))
-        response.set_cookie('data_cookie', data.serialize())
+        if validate(data):
+            pdf = generate_pdf_from_data(data)
+            response = make_response(render_template('resume.html', pdf=pdf))
+            response.set_cookie('data_cookie', data.serialize())
+        else:
+            response = render_template('resume.html', pdf=None)
     return response
 
 # Page about making resumes
@@ -36,7 +41,6 @@ def about():
 @app.route('/reset/')
 def reset():
     response = make_response(render_template('resume.html', pdf=None))
-    response.delete_cookie('data_cookie')
     return response
 
 @app.errorhandler(404)
