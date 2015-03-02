@@ -15,16 +15,16 @@ def homepage():
 def resume():
     if request.method == 'GET':
         pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
-        response = make_response(render_template('resume.html', pdf=pdf))
+        return render_template('resume.html', pdf=pdf)
     else:
         data = UserData(dict(request.form))
         if validate(data):
             pdf = generate_pdf_from_data(data)
             response = make_response(render_template('resume.html', pdf=pdf))
             response.set_cookie('data_cookie', data.serialize())
+            return response
         else:
-            response = render_template('resume.html', pdf=None)
-    return response
+            return render_template('resume.html', pdf=None)
 
 # Page about making resumes
 @app.route('/info/')
