@@ -38,9 +38,9 @@ def generate_pdf_from_data(data):
     Story.append(Paragraph('<font size=12><b>Education</b></font>', styles['Left']))    
     for school in data.education:
         Story.append(Paragraph('<font size=12>%s, %s</font>' % (school['name'], school['location']), styles['Left']))
-        Story.append(Paragraph('<font size=12>%s, %s (graduation year %s)</font>' % (school['degree'], school['status'], school['year']), styles['tabbed']))
+        Story.append(Paragraph('<font size=12>-%s, %s (graduation year %s)</font>' % (school['degree'], school['status'], school['year']), styles['tabbed']))
         try:
-            Story.append(Paragraph('<font size=12>GPA: %s</font>' % school['gpa'], styles['tabbed']))
+            Story.append(Paragraph('<font size=12>-GPA: %s</font>' % school['gpa'], styles['tabbed']))
         except KeyError:
             pass
         Story.append(Spacer(1, 12))
@@ -48,23 +48,23 @@ def generate_pdf_from_data(data):
     if data.work_experience:
         Story.append(Paragraph('<font size=12><b>Experience</b></font>', styles['Left']))
         for job in data.work_experience:
-            Story.append(Paragraph('<font size=12>%s, %s %s %s</font>' % (job['position'], job['employer'], job['location'], job['time_period']), styles['tabbed']))
+            Story.append(Paragraph('<font size=12>-%s, %s %s %s</font>' % (job['position'], job['employer'], job['location'], job['time_period']), styles['tabbed']))
             for comment in job['comments'].split("\n"):
-                Story.append(Paragraph('<font size=12>%s</font>' % comment, styles['tabbed']))
+                Story.append(Paragraph('<font size=12>-%s</font>' % comment, styles['tabbed']))
             Story.append(Spacer(1, 12))
     
     if data.projects:
         Story.append(Paragraph('<font size=12><b>Projects</b></font>', styles["Left"]))
         for item in data.projects:
             Story.append(Paragraph('<font size=12>%s</font>' % item['title'], styles['Left']))
-            Story.append(Paragraph('<font size=12>%s</font>' % item['summary'], styles['tabbed']))
+            Story.append(Paragraph('<font size=12>-%s</font>' % item['summary'], styles['tabbed']))
             for comment in item['comments'].split("\n"):
-                Story.append(Paragraph('<font size=12>%s</font>' % comment, styles['tabbed']))
+                Story.append(Paragraph('<font size=12>-%s</font>' % comment, styles['tabbed']))
             Story.append(Spacer(1, 12))
 
     Story.append(Paragraph('<font size=12><b>Skills</b></font>', styles['Left']))
     for skill in data.skills:
-        Story.append(Paragraph('<font size=12>%s</font>' % skill, styles['tabbed']))
+        Story.append(Paragraph('<font size=12>-%s</font>' % skill, styles['tabbed']))
 
     doc.build(Story)
     return '/' + filename 
