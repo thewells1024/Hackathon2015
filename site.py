@@ -14,11 +14,8 @@ def homepage():
 @app.route('/resume/', methods=['GET', 'POST'])
 def resume():
     if request.method == 'GET':
-        try:
-            pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
-            response = make_response(render_template('resume.html', pdf=pdf))
-        except:
-            response = render_template('resume.html', pdf=None)
+        pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
+        response = make_response(render_template('resume.html', pdf=pdf))
     else:
         data = UserData(dict(request.form))
         if validate(data):
