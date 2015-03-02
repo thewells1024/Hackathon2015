@@ -58,6 +58,8 @@ def deserialize_lod(string, identifier):
 
 # Takes a cookie string and returns an instance of UserData
 def deserialize(cookie):
+    if cookie == None:
+        return None
     formData = {}
     for dataSet in cookie.split("-_-"):
         id = dataSet[:2]

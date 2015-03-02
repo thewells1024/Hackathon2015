@@ -1,5 +1,5 @@
 # coding=UTF-8
-from flask import Flask, make_response, request, render_template
+from flask import Flask, make_response, redirect, request, render_template
 from resume_data import UserData, deserialize, validate
 from resume_pdf import generate_pdf_from_data
 
@@ -37,7 +37,8 @@ def about():
 
 @app.route('/reset/')
 def reset():
-    response = make_response(render_template('resume.html', pdf=None))
+    response = make_response(redirect('/resume/'))
+    response.delete_cookie('data_cookie')
     return response
 
 @app.errorhandler(404)
