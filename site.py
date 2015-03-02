@@ -17,7 +17,7 @@ def resume():
         try:
             pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
             response = make_response(render_template('resume.html', pdf=pdf))
-        except Exception:
+        except:
             response = render_template('resume.html', pdf=None)
     else:
         data = UserData(dict(request.form))
