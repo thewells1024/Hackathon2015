@@ -17,6 +17,8 @@ def get_secure_filename():
 
 # Takes a user data object and populates a pdf with the info, returning the url path to the pdf file
 def generate_pdf_from_data(data):
+    if data == None:
+        return None
     filename = get_secure_filename()
     subprocess.check_call(['touch', filename])
         

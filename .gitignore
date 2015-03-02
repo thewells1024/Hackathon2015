@@ -1,3 +1,3 @@
 *.pyc
 test.pdf
-static/resumes
+static/resumes/*.pdf

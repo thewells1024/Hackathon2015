@@ -1,5 +1,5 @@
 # coding=UTF-8
-from flask import Flask, make_response, request, render_template
+from flask import Flask, make_response, redirect, request, render_template
 from resume_data import UserData, deserialize, validate
 from resume_pdf import generate_pdf_from_data
 
@@ -14,20 +14,17 @@ def homepage():
 @app.route('/resume/', methods=['GET', 'POST'])
 def resume():
     if request.method == 'GET':
-        try:
-            pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
-            response = make_response(render_template('resume.html', pdf=pdf))
-        except Exception:
-            response = render_template('resume.html', pdf=None)
+        pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
+        return render_template('resume.html', pdf=pdf)
     else:
         data = UserData(dict(request.form))
         if validate(data):
             pdf = generate_pdf_from_data(data)
             response = make_response(render_template('resume.html', pdf=pdf))
             response.set_cookie('data_cookie', data.serialize())
+            return response
         else:
-            response = render_template('resume.html', pdf=None)
-    return response
+            return render_template('resume.html', pdf=None)
 
 # Page about making resumes
 @app.route('/info/')
@@ -40,7 +37,8 @@ def about():
 
 @app.route('/reset/')
 def reset():
-    response = make_response(render_template('resume.html', pdf=None))
+    response = make_response(redirect('/resume/'))
+    response.delete_cookie('data_cookie')
     return response
 
 @app.errorhandler(404)
