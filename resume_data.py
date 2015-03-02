@@ -89,15 +89,15 @@ def validate(data):
     try:
         for info in data.personal_info:
             if info == "" or info == "[u'']":
-                return false
+                return False
         for schoolInfo in data.education[0]:
-            if schoolInfo != "gpa" and (schoolInfo = "" or schoolInfo = "[u'']"):
-                return false
+            if schoolInfo != "gpa" and (schoolInfo == "" or schoolInfo == "[u'']"):
+                return False
         if data.skills[0] == "" or data.skills[0] == "[u'']":
-            return false
-        return true
+            return False
+        return True
     except KeyError:
-        return false
+        return False
 
 class UserData:
     def __init__(self, fd):
