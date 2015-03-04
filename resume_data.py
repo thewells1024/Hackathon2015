@@ -173,7 +173,10 @@ class UserData:
         self.education = parse_dict(fd, "school", "name", ["name", "location", "degree", "gpa", "status", "year"])
         self.work_experience = parse_dict(fd, "job", "position", ["position", "employer", "location", "time_period", "comments"])
         self.projects = parse_dict(fd, "project", "title", ["title", "summary", "comments"])
-        self.skills = [skill for skill in ''.join(fd['skills']).split('\n')]
+        if str(fd['skills']).find("\r\n") != -1:
+            self.skills = [skill for skill in ''.join(fd['skills']).split('\r\n')]
+        else:
+            self.skills = [skill for skill in ''.join(fd['skills']).split('\n')]
     
     # Takes a python object and returns an object for a cookie
     def serialize(self):

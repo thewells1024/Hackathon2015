@@ -2,6 +2,7 @@
 from flask import Flask, make_response, redirect, request, render_template
 from resume_data import UserData, deserialize, validate_delim, validate_req
 from resume_pdf import generate_pdf_from_data
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -19,16 +20,16 @@ def resume():
             return render_template('resume.html', pdf=None, info=data.stringify())
         else:
             data = UserData(dict(request.form))
-        if validate_delim(data):
-            if validate_req(data):
-                pdf = generate_pdf_from_data(data)
-                response = make_response(render_template('resume.html', pdf=pdf))
-                response.set_cookie('data_cookie', data.serialize())
-                return response
+            if validate_delim(data):
+                if validate_req(data):
+                    pdf = generate_pdf_from_data(data)
+                    response = make_response(render_template('resume.html', pdf=pdf))
+                    response.set_cookie('data_cookie', data.serialize(), expires = datetime.now() + timedelta(days=365))
+                    return response
+                else:
+                    return render_template('resume.html', pdf=None, rfail="Failed")
             else:
-                return render_template('resume.html', pdf=None, rfail="Failed")
-        else:
-            return render_template('resume.html', pdf=None, dfail="Failed")
+                return render_template('resume.html', pdf=None, dfail="Failed")
     except:
         return render_template('resume.html', pdf=None)
 
