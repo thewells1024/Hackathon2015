@@ -50,7 +50,7 @@ def generate_pdf_from_data(data):
     if data.work_experience:
         Story.append(Paragraph('<font size=12><b>Experience</b></font>', styles['Left']))
         for job in data.work_experience:
-            Story.append(Paragraph('<font size=12>-%s, %s %s %s</font>' % (job['position'], job['employer'], job['location'], job['time_period']), styles['tabbed']))
+            Story.append(Paragraph('<font size=12>%s, %s %s %s</font>' % (job['position'], job['employer'], job['location'], job['time_period']), styles['Left']))
             for comment in job['comments'].split("\n"):
                 Story.append(Paragraph('<font size=12>-%s</font>' % comment, styles['tabbed']))
             Story.append(Spacer(1, 12))

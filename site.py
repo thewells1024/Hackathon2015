@@ -1,6 +1,6 @@
 # coding=UTF-8
 from flask import Flask, make_response, redirect, request, render_template
-from resume_data import UserData, deserialize, validate
+from resume_data import UserData, deserialize, validate_delim, validate_req
 from resume_pdf import generate_pdf_from_data
 
 app = Flask(__name__)
@@ -13,18 +13,24 @@ def homepage():
 # Start of the resume-generation process
 @app.route('/resume/', methods=['GET', 'POST'])
 def resume():
-    if request.method == 'GET':
-        pdf = generate_pdf_from_data(deserialize(request.cookies.get('data_cookie')))
-        return render_template('resume.html', pdf=pdf)
-    else:
-        data = UserData(dict(request.form))
-        if validate(data):
-            pdf = generate_pdf_from_data(data)
-            response = make_response(render_template('resume.html', pdf=pdf))
-            response.set_cookie('data_cookie', data.serialize())
-            return response
+    try:
+        if request.method == 'GET':
+            data = deserialize(request.cookies.get('data_cookie'))
+            return render_template('resume.html', pdf=None, info=data.stringify())
         else:
-            return render_template('resume.html', pdf=None)
+            data = UserData(dict(request.form))
+        if validate_delim(data):
+            if validate_req(data):
+                pdf = generate_pdf_from_data(data)
+                response = make_response(render_template('resume.html', pdf=pdf))
+                response.set_cookie('data_cookie', data.serialize())
+                return response
+            else:
+                return render_template('resume.html', pdf=None, rfail="Failed")
+        else:
+            return render_template('resume.html', pdf=None, dfail="Failed")
+    except:
+        return render_template('resume.html', pdf=None)
 
 # Page about making resumes
 @app.route('/info/')
@@ -34,12 +40,6 @@ def resume_info():
 @app.route('/about/')
 def about():
     return render_template('about.html')
-
-@app.route('/reset/')
-def reset():
-    response = make_response(redirect('/resume/'))
-    response.delete_cookie('data_cookie')
-    return response
 
 @app.errorhandler(404)
 def page_not_found(error):
