@@ -2,6 +2,7 @@
 # coding=UTF-8
 
 import re
+from HTMLParser import HTMLParser
 
 def dict_count(fd, string, search):
     return len([x for x in fd.keys() if x.find(string) >= 0 and x.find(search) >= 0])
@@ -99,6 +100,10 @@ def deserialize(cookie):
             formData["skills"] = s
     return UserData(formData)
 
+def unescape(string):
+    h = HTMLParser()
+    return h.unescape(string);
+
 def validate_req(data):
     try:
         for info in data.personal_info:
@@ -138,6 +143,8 @@ def validate_delim(data):
 def stringify_dict(dict, reference):
     string = ""
     for key in dict.keys():
+        if dict[key] == None or dict[key] == '' or dict[key] == "[u'']":
+            continue
         string +=  reference + key + ":" + dict[key][:-1] + "-_-"
     string = string[:-3]
     return string
